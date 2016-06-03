@@ -10,27 +10,45 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
+import ast
+
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+ENV = os.getenv('DJANGO_ENV', 'prod')
+PROD = ENV in ['prod', 'production']
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
+DEBUG = not PROD
+debug_env = os.getenv('DEBUG', None)
+if debug_env is not None:
+    DEBUG = ast.literal_eval(debug_env)
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2lu)-rdg07(c-q=4mh)6kumwfvrna*9f3%i1=ii%ted_ftewn)'
+ssl_required = PROD and ast.literal_eval(os.getenv('SSL', 'True'))
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv('SECRET_KEY', '+)2m1(7!+5-p-iazefib&8i7+a4^pod(èer!éç"fn,uo5)jhem(1-bo#p')
 
-ALLOWED_HOSTS = []
+SECURE_BROWSER_XSS_FILTER = ssl_required
+SECURE_CONTENT_TYPE_NOSNIFF = ssl_required
+SESSION_COOKIE_SECURE = ssl_required
+CSRF_COOKIE_SECURE = ssl_required
+CSRF_COOKIE_HTTPONLY = PROD
+USE_X_FORWARDED_HOST = PROD
 
+# We don't want to redirect but thrown an error if no SSL in prod.
+# See api.middleware.RejectHTTPMiddleware
+SECURE_SSL_REDIRECT = ssl_required
+
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '.augendre.info']
+
+X_FRAME_OPTIONS = 'DENY'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +73,7 @@ ROOT_URLCONF = 'refunds.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates', 'refunds/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +88,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'refunds.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
@@ -81,6 +98,8 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
@@ -100,13 +119,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = os.getenv('DJANGO_LOCALE', 'en-us')
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = os.getenv('DJANGO_TIMEZONE', 'UTC')
 
 USE_I18N = True
 
@@ -114,8 +132,29 @@ USE_L10N = True
 
 USE_TZ = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+    'static'
+)
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# LOGIN_URL = 'auth_login'
+# LOGOUT_URL = 'auth_logout'
+# LOGIN_REDIRECT_URL = 'blog_home'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
