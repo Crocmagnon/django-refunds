@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+    <h1>Gab's thoughts</h1>
+    <p class="lead">Welcome to my blog. I hope you will enjoy your journey here.</p>
+    <p>This blog is about creating websites with Django, a Python framework designed for web.</p>
+    <p>Feel free to start by exploring my <a href="{% url 'posts_latest' %}">latest blog entries</a>.</p>
+{% endblock %}
