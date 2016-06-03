@@ -1,0 +1,32 @@
+{
+  "name": "refunds",
+  "description": "Refunds management app",
+  "scripts": {
+  },
+  "addons": [
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-python"
+    }
+  ],
+  "env": {
+    "SECRET_KEY": {
+      "description": "Django secret key",
+      "generator": "secret"
+    },
+    "DJANGO_LOCALE": {
+      "description": "Locale to use in Django",
+      "value": "en-us"
+    },
+    "DJANGO_TIMEZONE": {
+      "description": "Timezone to use in Django",
+      "value": "Europe/Paris"
+    },
+    "DJANGO_ENV": {
+      "description": "Django environment. \"prod\" or \"dev\"",
+      "value": "prod"
+    }
+  }
+}
