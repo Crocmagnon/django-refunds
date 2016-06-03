@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^auth/', include('authentication.urls')),
     url(r'^$', home, name='home'),
     url(r'^about/$', about, name='about'),
+    url(r'^', include('refunding.urls'))
 ]
