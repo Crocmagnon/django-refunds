@@ -48,6 +48,7 @@ X_FRAME_OPTIONS = 'DENY'
 # Application definition
 
 INSTALLED_APPS = [
+    'authentication',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -153,8 +154,8 @@ STATICFILES_DIRS = (
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-# LOGIN_URL = 'auth_login'
-# LOGOUT_URL = 'auth_logout'
-# LOGIN_REDIRECT_URL = 'blog_home'
+LOGIN_URL = 'auth_login'
+LOGOUT_URL = 'auth_logout'
+LOGIN_REDIRECT_URL = 'home'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

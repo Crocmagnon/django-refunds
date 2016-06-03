@@ -9,7 +9,7 @@ urlpatterns = [
         ),
     url(r'^logout/$',
         logout,
-        {'next_page': 'blog_home'},
+        {'next_page': 'home'},
         name='auth_logout'
         ),
 ]
