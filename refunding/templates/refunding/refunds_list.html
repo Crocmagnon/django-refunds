@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load l10n %}
+
+{% block content %}
+    <h1>{% block title %}Latest refunds{% endblock %}</h1>
+    {% if refunds %}
+        <div class="list-group">
+            {% for refund in refunds %}
+                <div class="list-group-item">
+                    {{ refund.title }} le {{ refund.date|date:"SHORT_DATE_FORMAT" }} : {{ payment.amount }}€
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>
+            {% firstof default_nothing "Nothing here..." %}
+        </p>
+    {% endif %}
+{% endblock %}

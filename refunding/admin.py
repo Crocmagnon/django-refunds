@@ -10,7 +10,7 @@ class RefundAdmin(admin.ModelAdmin):
     search_fields = ('title',)
     date_hierarchy = 'date'
     form = RefundForm
-    readonly_fields = ('amount',)
+    readonly_fields = ('eur_value',)
 
 
 @admin.register(Payment)

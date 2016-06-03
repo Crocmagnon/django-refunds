@@ -15,11 +15,11 @@ class Refund(models.Model):
         on_delete=models.PROTECT
     )
 
-    def amount(self) -> float:
+    def eur_value(self) -> float:
         return self.payment_set.all().aggregate(Sum('value')).get('value__sum') / 100
 
     def __str__(self) -> str:
-        return "{0} on {1} for {2}".format(self.title, self.date, self.amount())
+        return "{0} on {1} for {2}".format(self.title, self.date, self.eur_value())
 
 
 class Payment(models.Model):

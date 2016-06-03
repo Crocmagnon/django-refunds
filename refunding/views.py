@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render
-from refunding.models import Payment
+from refunding.models import Payment, Refund
 
 
 @login_required
@@ -14,3 +14,13 @@ def not_refunded_payments(request):
         'default_nothing': 'No payment to be refunded.'
     }
     return render(request, "refunding/payments_list.html", context)
+
+
+@login_required
+def latest_refunds(request):
+    refunds = Refund.objects.all().order_by('date')[:20]
+    context = {
+        'refunds': refunds,
+        'default_nothing': 'No refund to show.'
+    }
+    return render(request, "refunding/refunds_list.html", context)
