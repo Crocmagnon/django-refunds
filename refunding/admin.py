@@ -1,4 +1,5 @@
 from django.contrib import admin
+from refunding.forms import RefundForm
 from refunding.models import Refund, Payment
 
 
@@ -8,11 +9,13 @@ class RefundAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     search_fields = ('title',)
     date_hierarchy = 'date'
+    form = RefundForm
+    readonly_fields = ('amount',)
 
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date', 'value', 'user', 'refund')
+    list_display = ('title', 'date', 'eur_value', 'user', 'refund')
     list_display_links = ('title',)
     search_fields = ('title',)
     date_hierarchy = 'date'
