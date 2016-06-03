@@ -48,6 +48,7 @@ X_FRAME_OPTIONS = 'DENY'
 # Application definition
 
 INSTALLED_APPS = [
+    'refunding',
     'authentication',
     'crispy_forms',
     'django.contrib.admin',
