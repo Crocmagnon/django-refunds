@@ -1,5 +1,6 @@
 from django.conf.urls import url
-from django.contrib.auth.views import login, logout
+from django.contrib.auth.views import login, logout, password_change
+from authentication.views import password_change_done
 
 urlpatterns = [
     url(r'^login/$',
@@ -12,4 +13,6 @@ urlpatterns = [
         {'next_page': 'home'},
         name='auth_logout'
         ),
+    url(r'^password/change/$', password_change, {'template_name': 'authentication/change_password.html'}, name='password_change'),
+    url(r'^password/change/done/$', password_change_done, name='password_change_done'),
 ]
