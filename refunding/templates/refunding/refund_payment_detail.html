@@ -17,7 +17,20 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{% block title %}{{ title }}{% endblock %}</h1>
+    <h1>
+        {% block title %}{{ title }}{% endblock %}
+        <div class="btn-group pull-right">
+            {% if payment and perms.refunding.delete_payment %}
+                <a class="btn btn-danger" href="{% url 'payment_delete' payment.pk %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            {% elif refund and perms.refunding.delete_refund %}
+                <a class="btn btn-danger" href="{% url 'refund_delete' refund.pk %}">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            {% endif %}
+        </div>
+    </h1>
     <form method="post">
         {% csrf_token %}
         {{ form.media }}

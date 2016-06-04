@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
@@ -58,10 +59,23 @@ def refund_edit(request, pk):
 
     context = {
         'form': form,
-        'title': 'Edit refund'
+        'title': 'Edit refund',
+        'refund': refund
     }
 
     return render(request, 'refunding/refund_payment_detail.html', context)
+
+
+@login_required
+@permission_required('refunding.delete_refund')
+def refund_delete(request, pk):
+    refund = get_object_or_404(Refund, pk=pk)
+
+    refund.delete()
+
+    messages.success(request, "Refund deleted successfully")
+
+    return latest_refunds(request)
 
 
 ##############################
@@ -124,7 +138,20 @@ def payment_edit(request, pk):
 
     context = {
         'form': form,
-        'title': 'Edit payment'
+        'title': 'Edit payment',
+        'payment': payment
     }
 
     return render(request, 'refunding/refund_payment_detail.html', context)
+
+
+@login_required
+@permission_required('refunding.delete_payment')
+def payment_delete(request, pk):
+    payment = get_object_or_404(Payment, pk=pk)
+
+    payment.delete()
+
+    messages.success(request, "Payment deleted successfully")
+
+    return not_refunded_payments(request)
