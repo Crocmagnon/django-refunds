@@ -45,3 +45,16 @@ class RefundFormPublic(RefundForm):
             }
         )
     )
+
+
+class PaymentForm(forms.ModelForm):
+    class Meta:
+        model = Payment
+        fields = ('title', 'value', 'date')
+        widgets = {
+            'date': DateTimePicker(
+                options={
+                    "format": "YYYY-MM-DD"
+                }
+            ),
+        }

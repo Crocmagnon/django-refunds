@@ -2,6 +2,15 @@
 {% load l10n %}
 
 {% block content %}
-    <h1>{% block title %}Payments to refund{% endblock %}</h1>
+    <h1>
+        {% block title %}Payments to refund{% endblock %}
+        {% if user.is_authenticated %}
+            <div class="btn-group pull-right">
+                <a class="btn btn-success" href="{% url 'new_payment' %}">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+            </div>
+        {% endif %}
+    </h1>
     {% include 'refunding/elements_list.html' with elements=payments %}
 {% endblock %}

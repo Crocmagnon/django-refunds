@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
-from refunding.forms import RefundFormPublic
+from refunding.forms import RefundFormPublic, PaymentForm
 from refunding.models import Payment, Refund
 
 
@@ -48,7 +48,27 @@ def new_refund(request):
         'form': form,
         'title': 'New refund'
     }
-    return render(request, "refunding/edit_new_refund.html", context)
+    return render(request, "refunding/refund_payment_detail.html", context)
+
+
+
+@login_required
+def new_payment(request):
+    if request.method == 'POST':
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save(commit=False)
+            payment.user = request.user
+            payment.save()
+            return redirect('not_refunded_payments')
+    else:
+        form = PaymentForm()
+
+    context = {
+        'form': form,
+        'title': 'New payment'
+    }
+    return render(request, "refunding/refund_payment_detail.html", context)
 
 
 @login_required
@@ -67,4 +87,4 @@ def refund_edit(request, pk):
         'form': form,
         'title': 'Edit refund'
     }
-    return render(request, 'refunding/edit_new_refund.html', context)
+    return render(request, 'refunding/refund_payment_detail.html', context)
