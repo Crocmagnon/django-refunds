@@ -12,11 +12,16 @@ class Refund(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
         AUTH_USER_MODEL,
-        on_delete=models.PROTECT
+        on_delete=models.PROTECT,
+        null=True
     )
 
     def eur_value(self) -> float:
-        return self.payment_set.all().aggregate(Sum('value')).get('value__sum') / 100
+        value_sum = self.payment_set.all().aggregate(Sum('value')).get('value__sum')
+        if value_sum:
+            return value_sum / 100
+        else:
+            return 0
 
     def __str__(self) -> str:
         return "{0} on {1} for {2}".format(self.title, self.date, self.eur_value())

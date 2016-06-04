@@ -50,6 +50,7 @@ X_FRAME_OPTIONS = 'DENY'
 INSTALLED_APPS = [
     'refunding',
     'authentication',
+    'bootstrap3_datetime',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
