@@ -81,7 +81,7 @@ def not_refunded_payments(request):
     context = {
         'payments': payments,
         'sum': value_sum,
-        'default_nothing': 'No payment to be refunded.'
+        'default_nothing': 'Nothing to refund :)'
     }
     return render(request, "refunding/payments.html", context)
 
