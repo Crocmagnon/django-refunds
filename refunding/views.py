@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect, get_object_or_404
 from refunding.forms import RefundFormPublic, PaymentForm
@@ -33,6 +33,7 @@ def latest_refunds(request):
 
 
 @login_required
+@permission_required('refunding.add_refund')
 def new_refund(request):
     if request.method == 'POST':
         form = RefundFormPublic(request.POST)
@@ -48,11 +49,12 @@ def new_refund(request):
         'form': form,
         'title': 'New refund'
     }
+
     return render(request, "refunding/refund_payment_detail.html", context)
 
 
-
 @login_required
+@permission_required('refunding.add_payment')
 def new_payment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST)
@@ -68,12 +70,15 @@ def new_payment(request):
         'form': form,
         'title': 'New payment'
     }
+
     return render(request, "refunding/refund_payment_detail.html", context)
 
 
 @login_required
+@permission_required('refunding.change_refund')
 def refund_edit(request, pk):
     refund = get_object_or_404(Refund, pk=pk)
+
     if request.method == 'POST':
         form = RefundFormPublic(request.POST, instance=refund)
         if form.is_valid():
@@ -83,8 +88,10 @@ def refund_edit(request, pk):
             return redirect('latest_refunds')
     else:
         form = RefundFormPublic(instance=refund)
+
     context = {
         'form': form,
         'title': 'Edit refund'
     }
+
     return render(request, 'refunding/refund_payment_detail.html', context)

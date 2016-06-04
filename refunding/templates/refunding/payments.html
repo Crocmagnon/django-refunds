@@ -4,7 +4,7 @@
 {% block content %}
     <h1>
         {% block title %}Payments to refund{% endblock %}
-        {% if user.is_authenticated %}
+        {% if user.is_authenticated and perms.refunding.add_payment %}
             <div class="btn-group pull-right">
                 <a class="btn btn-success" href="{% url 'new_payment' %}">
                     <span class="glyphicon glyphicon-plus"></span>
