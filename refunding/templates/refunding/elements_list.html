@@ -1,0 +1,18 @@
+{% if elements %}
+    {% if sum %}
+        <p>
+            Total : {{ sum }}€
+        </p>
+    {% endif %}
+    <div class="list-group">
+        {% for e in elements %}
+            <div class="list-group-item">
+                {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value }}€
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>
+        {% firstof default_nothing "Nothing here..." %}
+    </p>
+{% endif %}

@@ -13,7 +13,7 @@ def not_refunded_payments(request):
         'sum': sum,
         'default_nothing': 'No payment to be refunded.'
     }
-    return render(request, "refunding/payments_list.html", context)
+    return render(request, "refunding/payments.html", context)
 
 
 @login_required
@@ -23,4 +23,4 @@ def latest_refunds(request):
         'refunds': refunds,
         'default_nothing': 'No refund to show.'
     }
-    return render(request, "refunding/refunds_list.html", context)
+    return render(request, "refunding/refunds.html", context)
