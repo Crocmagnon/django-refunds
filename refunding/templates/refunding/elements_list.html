@@ -13,7 +13,7 @@
             {% else %}
                 <div class="list-group-item">
             {% endif %}
-            {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value }}€
+            {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value|floatformat:2 }}€
             {% if refunds or payments %}
                 </a>
             {% else %}
