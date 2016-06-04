@@ -8,11 +8,13 @@
         {% for e in elements %}
             {% if refunds %}
                 <a class="list-group-item" href="{% url 'refund_edit' pk=e.pk %}">
+            {% elif payments %}
+                <a class="list-group-item" href="{% url 'payment_edit' pk=e.pk %}">
             {% else %}
                 <div class="list-group-item">
             {% endif %}
             {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value }}€
-            {% if refunds %}
+            {% if refunds or payments %}
                 </a>
             {% else %}
                 </div>

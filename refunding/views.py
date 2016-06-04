@@ -5,21 +5,9 @@ from refunding.forms import RefundFormPublic, PaymentForm
 from refunding.models import Payment, Refund
 
 
-@login_required
-def not_refunded_payments(request):
-    payments = Payment.objects.filter(refund=None)
-    value_sum = payments.aggregate(Sum('value')).get('value__sum')
-    if value_sum:
-        value_sum /= 100
-    else:
-        value_sum = 0
-
-    context = {
-        'payments': payments,
-        'sum': value_sum,
-        'default_nothing': 'No payment to be refunded.'
-    }
-    return render(request, "refunding/payments.html", context)
+#############################
+# -------- Refunds -------- #
+#############################
 
 
 @login_required
@@ -54,6 +42,51 @@ def new_refund(request):
 
 
 @login_required
+@permission_required('refunding.change_refund')
+def refund_edit(request, pk):
+    refund = get_object_or_404(Refund, pk=pk)
+
+    if request.method == 'POST':
+        form = RefundFormPublic(request.POST, instance=refund)
+        if form.is_valid():
+            refund = form.save()
+            refund.user = request.user
+            refund.save()
+            return redirect('latest_refunds')
+    else:
+        form = RefundFormPublic(instance=refund)
+
+    context = {
+        'form': form,
+        'title': 'Edit refund'
+    }
+
+    return render(request, 'refunding/refund_payment_detail.html', context)
+
+
+##############################
+# -------- Payments -------- #
+##############################
+
+
+@login_required
+def not_refunded_payments(request):
+    payments = Payment.objects.filter(refund=None)
+    value_sum = payments.aggregate(Sum('value')).get('value__sum')
+    if value_sum:
+        value_sum /= 100
+    else:
+        value_sum = 0
+
+    context = {
+        'payments': payments,
+        'sum': value_sum,
+        'default_nothing': 'No payment to be refunded.'
+    }
+    return render(request, "refunding/payments.html", context)
+
+
+@login_required
 @permission_required('refunding.add_payment')
 def new_payment(request):
     if request.method == 'POST':
@@ -75,23 +108,23 @@ def new_payment(request):
 
 
 @login_required
-@permission_required('refunding.change_refund')
-def refund_edit(request, pk):
-    refund = get_object_or_404(Refund, pk=pk)
+@permission_required('refunding.change_payment')
+def payment_edit(request, pk):
+    payment = get_object_or_404(Payment, pk=pk)
 
     if request.method == 'POST':
-        form = RefundFormPublic(request.POST, instance=refund)
+        form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
-            refund = form.save()
-            refund.user = request.user
-            refund.save()
-            return redirect('latest_refunds')
+            payment = form.save(commit=False)
+            payment.user = request.user
+            payment.save()
+            return redirect('not_refunded_payments')
     else:
-        form = RefundFormPublic(instance=refund)
+        form = PaymentForm(instance=payment)
 
     context = {
         'form': form,
-        'title': 'Edit refund'
+        'title': 'Edit payment'
     }
 
     return render(request, 'refunding/refund_payment_detail.html', context)

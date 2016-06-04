@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'^refunds/new/$', views.new_refund, name='new_refund'),
     url(r'^payments/new/$', views.new_payment, name='new_payment'),
     url(r'^refunds/(?P<pk>[0-9]+)/edit/$', views.refund_edit, name='refund_edit'),
+    url(r'^payments/(?P<pk>[0-9]+)/edit/$', views.payment_edit, name='payment_edit'),
 ]
