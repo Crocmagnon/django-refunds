@@ -17,8 +17,8 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{% block title %}New refund{% endblock %}</h1>
-    <form action="{% url 'new_refund' %}" method="post">
+    <h1>{% block title %}{{ title }}{% endblock %}</h1>
+    <form method="post">
         {% csrf_token %}
         {{ form.media }}
         {{ form|crispy }}

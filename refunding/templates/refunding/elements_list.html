@@ -6,9 +6,17 @@
     {% endif %}
     <div class="list-group">
         {% for e in elements %}
-            <div class="list-group-item">
-                {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value }}€
-            </div>
+            {% if refunds %}
+                <a class="list-group-item" href="{% url 'refund_edit' pk=e.pk %}">
+            {% else %}
+                <div class="list-group-item">
+            {% endif %}
+            {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value }}€
+            {% if refunds %}
+                </a>
+            {% else %}
+                </div>
+            {% endif %}
         {% endfor %}
     </div>
 {% else %}
