@@ -1,17 +1,22 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.shortcuts import render, redirect
-from refunding.forms import RefundForm, RefundFormPublic
+from refunding.forms import RefundFormPublic
 from refunding.models import Payment, Refund
 
 
 @login_required
 def not_refunded_payments(request):
     payments = Payment.objects.filter(refund=None)
-    sum = payments.aggregate(Sum('value')).get('value__sum') / 100
+    value_sum = payments.aggregate(Sum('value')).get('value__sum')
+    if value_sum:
+        value_sum /= 100
+    else:
+        value_sum = 0
+
     context = {
         'payments': payments,
-        'sum': sum,
+        'sum': value_sum,
         'default_nothing': 'No payment to be refunded.'
     }
     return render(request, "refunding/payments.html", context)
