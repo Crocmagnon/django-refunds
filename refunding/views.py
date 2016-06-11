@@ -85,7 +85,7 @@ def refund_delete(request, pk):
 
 @login_required
 def not_refunded_payments(request):
-    payments = Payment.objects.filter(refund=None)
+    payments = Payment.objects.filter(refund=None).order_by('-date')
     value_sum = payments.aggregate(Sum('value')).get('value__sum')
     if value_sum:
         value_sum /= 100
