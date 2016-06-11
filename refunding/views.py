@@ -13,7 +13,7 @@ from refunding.models import Payment, Refund
 
 @login_required
 def latest_refunds(request):
-    refunds = Refund.objects.all().order_by('date')[:20]
+    refunds = Refund.objects.all().order_by('-date')[:20]
     context = {
         'refunds': refunds,
         'default_nothing': 'No refund to show.'
