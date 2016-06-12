@@ -15,7 +15,10 @@ class RefundForm(forms.ModelForm):
         super(RefundForm, self).__init__(*args, **kwargs)
         if self.instance:
             self.fields['payments'].initial = self.instance.payment_set.all()
-            self.fields['payments'].queryset = Payment.objects.filter(Q(refund=None) | Q(refund=self.instance))
+            self.fields['payments'].queryset = Payment\
+                .objects\
+                .filter(Q(refund=None) | Q(refund=self.instance))\
+                .order_by('-date')
 
     def save(self, *args, **kwargs):
         # Save the refund
