@@ -30,6 +30,8 @@ def new_refund(request):
             refund = form.save()
             refund.user = request.user
             refund.save()
+
+            messages.success(request, 'Refund created successfully')
             return redirect('latest_refunds')
     else:
         form = RefundFormPublic()
@@ -53,6 +55,8 @@ def refund_edit(request, pk):
             refund = form.save()
             refund.user = request.user
             refund.save()
+
+            messages.success(request, 'Refund edited successfully')
             return redirect('latest_refunds')
     else:
         form = RefundFormPublic(instance=refund)
@@ -109,6 +113,8 @@ def new_payment(request):
             payment = form.save(commit=False)
             payment.user = request.user
             payment.save()
+
+            messages.success(request, 'Payment created successfully')
             return redirect('not_refunded_payments')
     else:
         form = PaymentForm()
@@ -132,6 +138,8 @@ def payment_edit(request, pk):
             payment = form.save(commit=False)
             payment.user = request.user
             payment.save()
+
+            messages.success(request, 'Payment edited successfully')
             return redirect('not_refunded_payments')
     else:
         form = PaymentForm(instance=payment)
