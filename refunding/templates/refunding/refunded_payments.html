@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load l10n %}
+
+{% block content %}
+    <h1>
+        {% block title %}Refunded payments{% endblock %}
+    </h1>
+    {% include 'refunding/elements_list.html' with elements=refunded %}
+    <a href="{% url 'not_refunded_payments' %}">Only not refunded payments</a>
+{% endblock %}

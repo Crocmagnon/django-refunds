@@ -163,3 +163,20 @@ def payment_delete(request, pk):
     messages.success(request, "Payment deleted successfully")
 
     return not_refunded_payments(request)
+
+
+@login_required
+def already_refunded_payments(request):
+    refunded = Payment.objects.exclude(refund=None).order_by('-date', '-id')
+    value_sum = refunded.aggregate(Sum('value')).get('value__sum')
+    if value_sum:
+        value_sum /= 100
+    else:
+        value_sum = 0
+
+    context = {
+        'refunded': refunded,
+        'sum': value_sum,
+        'default_nothing': 'No refunded payment :)'
+    }
+    return render(request, "refunding/refunded_payments.html", context)

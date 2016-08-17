@@ -13,4 +13,5 @@
         {% endif %}
     </h1>
     {% include 'refunding/elements_list.html' with elements=payments %}
+    <a href="{% url 'already_refunded_payments' %}">Only refunded payments</a>
 {% endblock %}
