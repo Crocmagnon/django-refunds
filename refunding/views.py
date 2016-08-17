@@ -13,7 +13,7 @@ from refunding.models import Payment, Refund
 
 @login_required
 def latest_refunds(request):
-    refunds = Refund.objects.all().order_by('-date')[:20]
+    refunds = Refund.objects.all().order_by('-date', '-id')[:20]
     context = {
         'refunds': refunds,
         'default_nothing': 'No refund to show.'
@@ -89,7 +89,7 @@ def refund_delete(request, pk):
 
 @login_required
 def not_refunded_payments(request):
-    payments = Payment.objects.filter(refund=None).order_by('-date')
+    payments = Payment.objects.filter(refund=None).order_by('-date', '-id')
     value_sum = payments.aggregate(Sum('value')).get('value__sum')
     if value_sum:
         value_sum /= 100
