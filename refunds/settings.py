@@ -19,17 +19,22 @@ from django.contrib import messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Retrieve environment
 ENV = os.getenv('DJANGO_ENV', 'prod')
+debug_env = os.getenv('DEBUG', None)
+
+# Define production
 PROD = ENV in ['prod', 'production']
 
+# By default, if we're in prod, we don't want debug
 DEBUG = not PROD
-debug_env = os.getenv('DEBUG', None)
+
+# But we can override this.
 if debug_env is not None:
     DEBUG = ast.literal_eval(debug_env)
 
+# SSL will be required if in prod, unless the SSL is set to False.
 ssl_required = PROD and ast.literal_eval(os.getenv('SSL', 'True'))
-
-SECRET_KEY = os.getenv('SECRET_KEY', '+)2m1(7!+5-p-iazefib&8i7+a4^pod(èer!éç"fn,uo5)jhem(1-bo#p')
 
 SECURE_BROWSER_XSS_FILTER = ssl_required
 SECURE_CONTENT_TYPE_NOSNIFF = ssl_required
@@ -38,9 +43,11 @@ CSRF_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_HTTPONLY = PROD
 USE_X_FORWARDED_HOST = PROD
 
-# We don't want to redirect but thrown an error if no SSL in prod.
+# We don't want to redirect but throw an error if no SSL in prod.
 # See api.middleware.RejectHTTPMiddleware
 SECURE_SSL_REDIRECT = ssl_required
+
+SECRET_KEY = os.getenv('SECRET_KEY', '+)2m1(7!+5-p-iazefib&8i7+a4^pod(èer!éç"fn,uo5)jhem(1-bo#p')
 
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '.augendre.info']
 
