@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>
-        {% block title %}Payments to refund{% endblock %}
+        {% block title %}Paiements à rembourser{% endblock %}
         {% if user.is_authenticated and perms.refunding.add_payment %}
             <div class="btn-group pull-right">
                 <a class="btn btn-success" href="{% url 'new_payment' %}">
@@ -13,5 +13,5 @@
         {% endif %}
     </h1>
     {% include 'refunding/elements_list.html' with elements=payments %}
-    <a href="{% url 'already_refunded_payments' %}">Only refunded payments</a>
+    <a href="{% url 'already_refunded_payments' %}">Afficher uniquement les paiements déjà remboursés</a>
 {% endblock %}

@@ -3,11 +3,11 @@
 {% block title %}Home{% endblock %}
 {% block content %}
     <h1>Refunds</h1>
-    <p class="lead">Welcome to my refund app!</p>
+    <p class="lead">Bienvenue sur mon application de remboursements !</p>
     {% if not user.is_authenticated %}
-        <p>You may want to start by <a href="{% url 'auth_login' %}">logging in</a>.</p>
+        <p>Vous voudrez peut-être commencer par <a href="{% url 'auth_login' %}">vous connecter</a>.</p>
     {% else %}
-        <p>Start by adding a <a href="{% url 'new_payment' %}">new payment</a> or <a href="{% url 'new_refund' %}">refunding</a>
-            some existing payments!</p>
+        <p>Commencez par ajouter un <a href="{% url 'new_payment' %}">nouveau paiement</a> ou par <a href="{% url 'new_refund' %}">rembourser</a>
+            des paiements existants</p>
     {% endif %}
 {% endblock %}

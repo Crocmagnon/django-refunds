@@ -21,6 +21,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^auth/', include('authentication.urls')),
     url(r'^$', home, name='home'),
-    url(r'^about/$', about, name='about'),
     url(r'^', include('refunding.urls'))
 ]

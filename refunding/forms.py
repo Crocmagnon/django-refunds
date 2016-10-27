@@ -9,7 +9,7 @@ class RefundForm(forms.ModelForm):
         model = Refund
         fields = '__all__'
 
-    payments = forms.ModelMultipleChoiceField(queryset=Payment.objects.none())
+    payments = forms.ModelMultipleChoiceField(queryset=Payment.objects.none(), label='Paiements')
 
     def __init__(self, *args, **kwargs):
         super(RefundForm, self).__init__(*args, **kwargs)

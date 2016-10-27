@@ -9,7 +9,7 @@ urlpatterns = [
         {
             'template_name': 'authentication/auth_form.html',
             'extra_context': {
-                'title': 'Login',
+                'title': 'Connexion',
                 'action': 'Login'
             }
         },
@@ -27,7 +27,7 @@ urlpatterns = [
         {
             'template_name': 'authentication/auth_form.html',
             'extra_context': {
-                'title': 'Change password',
+                'title': 'Modifier le mot de passe',
                 'action': 'Change password'
             }
         },

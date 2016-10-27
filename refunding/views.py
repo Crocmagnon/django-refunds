@@ -16,7 +16,7 @@ def latest_refunds(request):
     refunds = Refund.objects.all().order_by('-date', '-id')[:20]
     context = {
         'refunds': refunds,
-        'default_nothing': 'No refund to show.'
+        'default_nothing': 'Aucun remboursement à afficher.'
     }
     return render(request, "refunding/refunds.html", context)
 
@@ -31,14 +31,14 @@ def new_refund(request):
             refund.user = request.user
             refund.save()
 
-            messages.success(request, 'Refund created successfully')
+            messages.success(request, 'Remboursement créé avec succès')
             return redirect('latest_refunds')
     else:
         form = RefundFormPublic()
 
     context = {
         'form': form,
-        'title': 'New refund'
+        'title': 'Nouveau remboursement'
     }
 
     return render(request, "refunding/refund_payment_detail.html", context)
@@ -56,14 +56,14 @@ def refund_edit(request, pk):
             refund.user = request.user
             refund.save()
 
-            messages.success(request, 'Refund edited successfully')
+            messages.success(request, 'Remboursement modifié avec succès')
             return redirect('latest_refunds')
     else:
         form = RefundFormPublic(instance=refund)
 
     context = {
         'form': form,
-        'title': 'Edit refund',
+        'title': 'Modifier un remboursement',
         'refund': refund
     }
 
@@ -77,7 +77,7 @@ def refund_delete(request, pk):
 
     refund.delete()
 
-    messages.success(request, "Refund deleted successfully")
+    messages.success(request, "Remboursement supprimé avec succès")
 
     return latest_refunds(request)
 
@@ -99,7 +99,7 @@ def not_refunded_payments(request):
     context = {
         'payments': payments,
         'sum': value_sum,
-        'default_nothing': 'Nothing to refund :)'
+        'default_nothing': 'Rien à rembourser :)'
     }
     return render(request, "refunding/payments.html", context)
 
@@ -114,14 +114,14 @@ def new_payment(request):
             payment.user = request.user
             payment.save()
 
-            messages.success(request, 'Payment created successfully')
+            messages.success(request, 'Paiement créé avec succès')
             return redirect('not_refunded_payments')
     else:
         form = PaymentForm()
 
     context = {
         'form': form,
-        'title': 'New payment'
+        'title': 'Nouveau paiement'
     }
 
     return render(request, "refunding/refund_payment_detail.html", context)
@@ -139,14 +139,14 @@ def payment_edit(request, pk):
             payment.user = request.user
             payment.save()
 
-            messages.success(request, 'Payment edited successfully')
+            messages.success(request, 'Paiement modifié avec succès')
             return redirect('not_refunded_payments')
     else:
         form = PaymentForm(instance=payment)
 
     context = {
         'form': form,
-        'title': 'Edit payment',
+        'title': 'Modifier un paiement',
         'payment': payment
     }
 
@@ -160,7 +160,7 @@ def payment_delete(request, pk):
 
     payment.delete()
 
-    messages.success(request, "Payment deleted successfully")
+    messages.success(request, "Paiement supprimé avec succès")
 
     return not_refunded_payments(request)
 
@@ -177,6 +177,6 @@ def already_refunded_payments(request):
     context = {
         'refunded': refunded,
         'sum': value_sum,
-        'default_nothing': 'No refunded payment :)'
+        'default_nothing': 'Aucun paiement remboursé :)'
     }
     return render(request, "refunding/refunded_payments.html", context)
