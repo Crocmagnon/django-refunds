@@ -43,10 +43,6 @@ CSRF_COOKIE_SECURE = ssl_required
 CSRF_COOKIE_HTTPONLY = PROD
 USE_X_FORWARDED_HOST = PROD
 
-# We don't want to redirect but throw an error if no SSL in prod.
-# See api.middleware.RejectHTTPMiddleware
-# SECURE_SSL_REDIRECT = ssl_required
-
 SECRET_KEY = os.getenv('SECRET_KEY', '+)2m1(7!+5-p-iazefib&8i7+a4^pod(èer!éç"fn,uo5)jhem(1-bo#p')
 
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '.augendre.info', 'refunds-web']
