@@ -44,7 +44,8 @@ class RefundFormPublic(RefundForm):
     date = forms.DateField(
         widget=DateTimePicker(
             options={
-                'format': 'YYYY-MM-DD'
+                'format': 'YYYY-MM-DD',
+                "locale": "fr",
             }
         )
     )
@@ -57,7 +58,8 @@ class PaymentForm(forms.ModelForm):
         widgets = {
             'date': DateTimePicker(
                 options={
-                    "format": "YYYY-MM-DD"
+                    'format': 'YYYY-MM-DD',
+                    "locale": "fr",
                 }
             ),
         }

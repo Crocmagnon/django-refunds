@@ -5,4 +5,5 @@ django-crispy-forms==1.6.0
 django-dotenv==1.4.1
 gunicorn==19.6.0
 psycopg2==2.6.2
+pytz
 whitenoise==3.2.1
