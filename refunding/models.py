@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.conf import settings
 from django.db.models import Sum
@@ -14,7 +16,7 @@ class Refund(models.Model):
         verbose_name_plural = 'remboursements'
 
     title = models.CharField(max_length=100, verbose_name='titre')
-    date = models.DateField()
+    date = models.DateField(default=datetime.date.today)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(
@@ -41,7 +43,7 @@ class Payment(models.Model):
         verbose_name_plural = 'paiements'
 
     title = models.CharField(max_length=100, verbose_name='titre')
-    date = models.DateField()
+    date = models.DateField(default=datetime.date.today)
     value = models.IntegerField(verbose_name='valeur')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
