@@ -1,7 +1,7 @@
 {% if elements %}
     {% if sum %}
         <p>
-            Total : {{ sum }}€
+            Total : {{ sum|floatformat:-2 }}€
         </p>
     {% endif %}
     <div class="list-group">
@@ -13,7 +13,7 @@
             {% else %}
                 <div class="list-group-item">
             {% endif %}
-            {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value|floatformat:2 }}€
+            {{ e.title }} le {{ e.date|date:"SHORT_DATE_FORMAT" }} : {{ e.eur_value|floatformat:-2 }}€
             {% if refunds or payments %}
                 </a>
             {% else %}
