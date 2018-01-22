@@ -155,6 +155,10 @@ STATICFILES_DIRS = (
     'static'
 )
 
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 LOGIN_URL = 'auth_login'
 LOGOUT_URL = 'auth_logout'
