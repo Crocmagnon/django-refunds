@@ -1,3 +1,5 @@
+import calendar
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.db.models import Sum
@@ -174,9 +176,23 @@ def already_refunded_payments(request):
     else:
         value_sum = 0
 
+    start_date = refunded.last().date
+    start_date = start_date.replace(day=1)
+
+    end_date = refunded.first().date
+    month = end_date.month
+    year = end_date.year + month // 12
+    month = month % 12 + 1
+    end_date = end_date.replace(year=year, month=month, day=1)
+
+    diff = (end_date.year - start_date.year) * 12 + end_date.month - start_date.month
+
+    monthly = value_sum / diff
+
     context = {
         'refunded': refunded,
         'sum': value_sum,
+        'monthly': monthly,
         'default_nothing': 'Aucun paiement remboursé :)'
     }
     return render(request, "refunding/refunded_payments.html", context)

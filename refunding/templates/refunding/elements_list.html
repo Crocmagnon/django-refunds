@@ -1,7 +1,7 @@
 {% if elements %}
     {% if sum %}
         <p>
-            Total : {{ sum|floatformat:-2 }}€
+            Total : {{ sum|floatformat:-2 }}€{% if refunded %} (soit {{ monthly|floatformat:-2 }}€ par mois){% endif %}
         </p>
     {% endif %}
     <div class="list-group">
