@@ -1,3 +1,5 @@
+import datetime
+
 from bootstrap3_datetime.widgets import DateTimePicker
 from django import forms
 from django.db.models import Q
@@ -19,6 +21,7 @@ class RefundForm(forms.ModelForm):
                 .objects\
                 .filter(Q(refund=None) | Q(refund=self.instance))\
                 .order_by('-date')
+            self.fields['date'].initial = datetime.date.today()
 
     def save(self, *args, **kwargs):
         # Save the refund
