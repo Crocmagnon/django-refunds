@@ -5,7 +5,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 
 
-class MonthBeforeJanuaryTestCase(TestCase):
+class DateInFormsTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.username = 'testuser'
