@@ -19,7 +19,6 @@ class MonthBeforeJanuaryTestCase(TestCase):
         response = c.get(reverse('new_refund'))
         self.assertLess(response.status_code, 300)
 
-        print(response.content)
         expected_date = datetime.date.today().isoformat()
         self.assertIn(expected_date,response.content.decode('utf-8'))
 
