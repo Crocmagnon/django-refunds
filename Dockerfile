@@ -7,19 +7,22 @@ RUN apk add --no-cache tzdata && \
 RUN apk add --no-cache postgresql-dev gcc musl-dev
 
 WORKDIR /app
-
-COPY requirements.txt /app
-
-RUN pip3 install -r requirements.txt
-
-COPY . /app
-
+EXPOSE 8000
 VOLUME /app/staticfiles
 
-ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/refunds
+RUN pip3 install pipenv
+COPY Pipfile Pipfile.lock ./
+RUN pipenv install
 
-EXPOSE 8000
+COPY . ./
 
 RUN chmod +x bash/run-prod.sh
+CMD bash/run-prod.sh
 
-CMD /app/bash/run-prod.sh
+ENV DATABASE_URL postgres://postgresql:postgresql@db:5432/refunds
+ENV SECRET_KEY ''
+ENV MAILGUN_ACCESS_KEY ''
+ENV MAILGUN_SERVER_NAME ''
+ENV DJANGO_ENV ''
+ENV ADMIN_EMAIL ''
+ENV SERVER_EMAIL ''

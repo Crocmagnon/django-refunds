@@ -1,0 +1,27 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+dj-database-url = "==0.4.1"
+Django = "==1.10"
+"django-bootstrap3-datetimepicker-2" = "==2.4.2"
+django-crispy-forms = "==1.6.0"
+django-dotenv = "==1.4.1"
+gunicorn = "==19.6.0"
+"psycopg2" = "==2.6.2"
+pytz = "*"
+whitenoise = "==3.2.1"
+
+
+[dev-packages]
+
+
+
+[requires]
+
+python_version = "3.6"
