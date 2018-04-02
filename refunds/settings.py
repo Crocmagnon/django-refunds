@@ -26,7 +26,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', '+)2m1(7!+5-p-iazefib&8i7+a4^pod(èer!éç"
 
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '.augendre.info', 'refunds-web']
 
-X_FRAME_OPTIONS = 'DENY'
+ADMINS = [('Gabriel', os.getenv('ADMIN_EMAIL')), ]
+SERVER_EMAIL = os.getenv('SERVER_EMAIL')
+EMAIL_SUBJECT_PREFIX = '[Refunds] '
 
 # Application definition
 
@@ -146,3 +148,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap3'
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
+
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = os.getenv('MAILGUN_ACCESS_KEY', '')
+MAILGUN_SERVER_NAME = os.getenv('MAILGUN_SERVER_NAME', '')
