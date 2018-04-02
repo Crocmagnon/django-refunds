@@ -20,28 +20,7 @@ from django.contrib import messages
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Retrieve environment
-ENV = os.getenv('DJANGO_ENV', 'prod')
-debug_env = os.getenv('DEBUG', None)
-
-# Define production
-PROD = ENV in ['prod', 'production']
-
-# By default, if we're in prod, we don't want debug
-DEBUG = not PROD
-
-# But we can override this.
-if debug_env is not None:
-    DEBUG = ast.literal_eval(debug_env)
-
-# SSL will be required if in prod, unless the SSL is set to False.
-ssl_required = PROD and ast.literal_eval(os.getenv('SSL', 'True'))
-
-SECURE_BROWSER_XSS_FILTER = ssl_required
-SECURE_CONTENT_TYPE_NOSNIFF = ssl_required
-SESSION_COOKIE_SECURE = ssl_required
-CSRF_COOKIE_SECURE = ssl_required
-CSRF_COOKIE_HTTPONLY = PROD
-USE_X_FORWARDED_HOST = PROD
+DEBUG = os.getenv('DJANGO_ENV', 'prod') == 'dev'
 
 SECRET_KEY = os.getenv('SECRET_KEY', '+)2m1(7!+5-p-iazefib&8i7+a4^pod(èer!éç"fn,uo5)jhem(1-bo#p')
 
@@ -138,8 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
