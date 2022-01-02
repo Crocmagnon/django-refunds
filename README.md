@@ -20,3 +20,6 @@ Basically three profiles exist :
 Currently, it's impossible to target a payment to a specific refunder. Payments are visible to all users that can refund.
 
 An improvement could be to be able to target a refund to a specific user, so only him can refund it. This would allow multiple users to share the same database. We could also imagine another system where all refunds from a specific user are by default targeted to the same set of refunders, with the possibility for the payer to change it.
+
+# Reuse
+If you do reuse my work, please consider linking back to this repository 🙂
